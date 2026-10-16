@@ -59,7 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
      -------------------------------------------------------- */
   const hamburger = document.querySelector('.hamburger');
   const mobileMenu = document.querySelector('.mobile-menu');
-  const mobileLinks = document.querySelectorAll('.mobile-menu__link');
+  const mobileLinks = document.querySelectorAll(
+    '.mobile-menu__link, .mobile-menu__cta'
+  );
 
   if (hamburger && mobileMenu) {
     hamburger.addEventListener('click', () => {
@@ -296,24 +298,65 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* --------------------------------------------------------
-     CONTACT FORM — basic front-end handler
-     (No backend yet — just shows a confirmation message)
+     CONTACT FORM — FormSubmit email delivery
      -------------------------------------------------------- */
   const contactForm = document.querySelector('.contact__form');
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+    const formStatus = contactForm.querySelector('.contact__form-status');
+
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = contactForm.querySelector('.btn');
-      const originalText = btn.textContent;
-      btn.textContent = 'Thank you! We\'ll be in touch.';
-      btn.style.pointerEvents = 'none';
-      btn.style.opacity = '0.7';
-      setTimeout(() => {
-        btn.textContent = originalText;
-        btn.style.pointerEvents = '';
-        btn.style.opacity = '';
+
+      if (!(submitButton instanceof HTMLButtonElement) || !formStatus) {
+        throw new Error('Contact form is missing its submit button or status message.');
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+      formStatus.textContent = '';
+      formStatus.removeAttribute('data-state');
+
+      try {
+        const response = await fetch(
+          'https://formsubmit.co/ajax/shapemyhome22@gmail.com',
+          {
+            method: 'POST',
+            body: new FormData(contactForm),
+            headers: { Accept: 'application/json' },
+          }
+        );
+        const result = await response.json();
+
+        if (
+          !response.ok ||
+          (result.success !== true && result.success !== 'true')
+        ) {
+          throw new Error(
+            typeof result.message === 'string'
+              ? result.message
+              : `Email service returned HTTP ${response.status}.`
+          );
+        }
+
         contactForm.reset();
-      }, 3000);
+        formStatus.textContent = 'Thanks! Your enquiry has been sent.';
+      } catch (error) {
+        console.error('Contact form submission failed:', error);
+        formStatus.dataset.state = 'error';
+        formStatus.textContent =
+          'We could not send your enquiry. Please try again or call us directly.';
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send Message';
+      }
+    });
+
+    contactForm.addEventListener('input', () => {
+      if (formStatus?.dataset.state === 'error') {
+        formStatus.textContent = '';
+        formStatus.removeAttribute('data-state');
+      }
     });
   }
 });

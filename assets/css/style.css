@@ -1019,6 +1019,16 @@ ul, ol {
   align-self: flex-start;
 }
 
+.contact__form-status {
+  min-height: 1.5em;
+  color: rgba(245, 243, 239, 0.7);
+  font-size: var(--text-small);
+}
+
+.contact__form-status[data-state="error"] {
+  color: #ffaaa0;
+}
+
 @media (min-width: 768px) {
   .contact__inner {
     grid-template-columns: 1fr 1fr;

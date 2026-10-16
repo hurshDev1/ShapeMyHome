@@ -66,7 +66,7 @@
     <a href="#about" class="mobile-menu__link">About</a>
     <a href="#process" class="mobile-menu__link">Process</a>
     <a href="#contact" class="mobile-menu__link">Contact</a>
-    <a href="tel:+919557640770" class="mobile-menu__phone">+91 95576 40770</a>
+    <a href="tel:+918750815486" class="mobile-menu__phone">+91 87508 15486</a>
     <a href="#contact" class="btn btn--primary mobile-menu__cta">Get a Consultation</a>
   </div>
 
@@ -421,10 +421,16 @@
             </div>
           </div>
 
-          <form class="contact__form reveal-child" id="contactForm">
+          <form class="contact__form reveal-child" id="contactForm" action="https://formsubmit.co/shapemyhome22@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="New enquiry from Shape My Home">
+            <input type="hidden" name="_template" value="table">
             <div class="form-group">
               <label for="contact-name">Name</label>
               <input type="text" id="contact-name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email</label>
+              <input type="email" id="contact-email" name="email" placeholder="you@example.com" autocomplete="email" required>
             </div>
             <div class="form-group">
               <label for="contact-phone">Phone</label>
@@ -435,6 +441,7 @@
               <textarea id="contact-message" name="message" placeholder="Tell us about your project..." rows="4"></textarea>
             </div>
             <button type="submit" class="btn btn--accent">Send Message</button>
+            <p class="contact__form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
       </div>
