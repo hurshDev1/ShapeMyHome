@@ -64,20 +64,22 @@ document.addEventListener('DOMContentLoaded', () => {
   );
 
   if (hamburger && mobileMenu) {
+    const setMobileMenuOpen = (isOpen) => {
+      hamburger.classList.toggle('active', isOpen);
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    };
+
     hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      mobileMenu.classList.toggle('open');
-      document.body.style.overflow = mobileMenu.classList.contains('open')
-        ? 'hidden'
-        : '';
+      setMobileMenuOpen(!mobileMenu.classList.contains('open'));
     });
 
     // Close on link click
     mobileLinks.forEach((link) => {
       link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
+        setMobileMenuOpen(false);
       });
     });
   }

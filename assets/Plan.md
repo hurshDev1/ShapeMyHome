@@ -26,7 +26,7 @@
 
 \- \*\*Designer / Studio Lead:\*\* Saurabh
 
-\- \*\*Contact Numbers:\*\* +91 95576 40770, +91 87508 15486
+\- \*\*Contact Number:\*\* +91 87508 15486
 
 \- \*\*Tone of voice:\*\* Confident, minimal, warm, professional — not salesy. Think "we design spaces that feel like they were always meant to be there."
 
@@ -254,7 +254,7 @@ List all 12 services as individual cards, numbered 01–12:
 
 &#x20; - Designer: \*\*Saurabh\*\*
 
-&#x20; - Phone: \*\*+91 95576 40770\*\* / \*\*+91 87508 15486\*\* (both click-to-call links)
+&#x20; - Phone: \*\*+91 87508 15486\*\* (click-to-call link)
 
 &#x20; - Simple contact form: Name, Phone, Message (no backend needed yet — just front-end form, can wire up later with Formspree/EmailJS free tier)
 
@@ -401,4 +401,3 @@ shape-my-home/
 \- Hosting: deploy free via \*\*GitHub Pages\*\*, \*\*Netlify\*\*, or \*\*Vercel\*\* (all have generous free tiers for static sites).
 
 \- Contact form: can go live immediately using \*\*Formspree free tier\*\* (no backend/server cost) once ready.
-
