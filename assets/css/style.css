@@ -368,14 +368,64 @@ ul, ol {
   pointer-events: all;
 }
 
-.mobile-menu__link {
+.mobile-menu__link,
+.mobile-menu__service-toggle {
   font-family: var(--font-heading);
   font-size: clamp(1.45rem, 4vw, 2rem);
   font-weight: 400;
   transition: color var(--transition);
 }
 
-.mobile-menu__link:hover {
+.mobile-menu__link:hover,
+.mobile-menu__service-toggle:hover {
+  color: var(--color-accent);
+}
+
+.mobile-menu__services {
+  text-align: center;
+}
+
+.mobile-menu__service-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.mobile-menu__service-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.mobile-menu__service-toggle::after {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translateY(-0.15rem) rotate(45deg);
+  transition: transform var(--transition);
+}
+
+.mobile-menu__services[open] .mobile-menu__service-toggle::after {
+  transform: translateY(0.1rem) rotate(225deg);
+}
+
+.mobile-menu__service-dropdown {
+  display: grid;
+  gap: 0.35rem;
+  padding-top: 0.75rem;
+}
+
+.mobile-menu__service-dropdown a {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-secondary);
+  transition: color var(--transition);
+}
+
+.mobile-menu__service-dropdown a:hover {
   color: var(--color-accent);
 }
 
@@ -666,6 +716,15 @@ ul, ol {
 .service-card:hover {
   border-color: rgba(212, 175, 55, 0.5);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.service-card[href] {
+  cursor: pointer;
+}
+
+.service-card[href]:focus-visible {
+  outline: 2px solid #D4AF37;
+  outline-offset: 4px;
 }
 
 /* Background image & zoom */

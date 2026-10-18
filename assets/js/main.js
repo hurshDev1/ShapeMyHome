@@ -319,8 +319,11 @@ document.addEventListener('DOMContentLoaded', () => {
       formStatus.textContent = '';
       formStatus.removeAttribute('data-state');
 
+      let response;
+      let nativeFallbackStarted = false;
+
       try {
-        const response = await fetch(
+        response = await fetch(
           'https://formsubmit.co/ajax/shapemyhome22@gmail.com',
           {
             method: 'POST',
@@ -345,12 +348,31 @@ document.addEventListener('DOMContentLoaded', () => {
         formStatus.textContent = 'Thanks! Your enquiry has been sent.';
       } catch (error) {
         console.error('Contact form submission failed:', error);
-        formStatus.dataset.state = 'error';
-        formStatus.textContent =
-          'We could not send your enquiry. Please try again or call us directly.';
+
+        const contentType = response?.headers.get('content-type') || '';
+        const shouldUseNativeSubmit =
+          !response ||
+          response.status === 403 ||
+          !contentType.includes('application/json') ||
+          error instanceof SyntaxError;
+
+        if (shouldUseNativeSubmit) {
+          formStatus.textContent = 'Opening the secure form submission...';
+          submitButton.textContent = 'Opening form...';
+          nativeFallbackStarted = true;
+          HTMLFormElement.prototype.submit.call(contactForm);
+        } else {
+          formStatus.dataset.state = 'error';
+          formStatus.textContent =
+            error instanceof Error
+              ? `We could not send your enquiry: ${error.message} Please try again or call us directly.`
+              : 'We could not send your enquiry. Please try again or call us directly.';
+        }
       } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Send Message';
+        if (!nativeFallbackStarted) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Send Message';
+        }
       }
     });
 
